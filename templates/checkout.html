@@ -1,0 +1,196 @@
+{% include "vistas/header.html" %}
+<!-- Fin de la cabecera/navegación -->
+
+<!-- Inicio de la sección principal -->
+<div class="hero">
+  <div class="container">
+    <div class="row justify-content-between">
+      <div class="col-lg-5">
+        <div class="intro-excerpt">
+          <h1>Finalizar compra</h1>
+        </div>
+      </div>
+      <div class="col-lg-7">
+        <!-- Imagen vacía o decorativa -->
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Fin de la sección principal -->
+
+<div class="untree_co-section">
+  <div class="container">
+    <div class="row">
+      <!-- Detalles de envío -->
+      <div class="col-md-6 mb-5 mb-md-0">
+        <h2 class="h3 mb-3 text-black">Detalles de envío</h2>
+        <div class="p-3 p-lg-5 border bg-white">
+          <form method="POST" action="{{ url_for('agregar_direccion') }}">
+            <input type="hidden" name="source" value="checkout">
+
+            <!-- Selección de dirección guardada -->
+            <div class="form-group">
+              <label for="direccion_guardada">Usar una dirección guardada</label>
+              <select name="direccion_guardada" id="direccion_guardada" class="form-control" onchange="toggleNuevaDireccion(this)">
+                <option value="">-- Selecciona una dirección guardada --</option>
+                {% for d in direcciones %}
+                <option value="{{ d.id }}" {% if d.id == direccion_seleccionada_id %}selected{% endif %}>
+                  {{ d.direccion }}, {{ d.colonia }}, {{ d.ciudad }}, {{ d.estado }}, CP {{ d.codigo_postal }}
+                </option>
+                {% endfor %}
+                <option value="nueva" {% if direccion_seleccionada_id == 'nueva' %}selected{% endif %}>Agregar nueva dirección</option>
+              </select>
+            </div>
+
+            <!-- Formulario para nueva dirección -->
+            <div id="form-nueva-direccion">
+
+              <div class="form-group">
+                <label for="direccion">Dirección <span class="text-danger">*</span></label>
+                <input type="text" name="direccion" class="form-control">
+              </div>
+
+              <div class="form-group">
+                <label for="estado">Estado <span class="text-danger">*</span></label>
+                <select name="estado" id="estado" class="form-control">
+                  <option value="">Selecciona un estado</option>
+                  {% for estado in estados %}
+                  <option value="{{ estado }}">{{ estado }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="ciudad">Ciudad <span class="text-danger">*</span></label>
+                <input type="text" name="ciudad" class="form-control">
+              </div>
+
+              <div class="form-group">
+                <label for="colonia">Colonia <span class="text-danger">*</span></label>
+                <select name="colonia" id="colonia" class="form-control">
+                  <option value="">Selecciona una colonia</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="codigo_postal">Código Postal <span class="text-danger">*</span></label>
+                <input type="text" name="codigo_postal" class="form-control" maxlength="5" pattern="\d{5}">
+              </div>
+
+              <div class="form-group">
+                <label for="telefono">Teléfono</label>
+                <input type="tel" name="telefono" class="form-control" pattern="\d{10}" placeholder="10 dígitos">
+              </div>
+
+              <div class="form-group">
+                <label for="referencias">Referencias</label>
+                <textarea name="referencias" class="form-control" rows="3" placeholder="Casa con portón azul, etc."></textarea>
+              </div>
+
+            </div>
+
+            <button type="submit" class="btn btn-primary">Guardar dirección</button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Resumen y pago -->
+      <div class="col-md-6">
+        <!-- Código de cupón -->
+        <div class="row mb-5">
+          <div class="col-md-12">
+            <h2 class="h3 mb-3 text-black">Código de cupón</h2>
+            <div class="p-3 p-lg-5 border bg-white">
+              <label for="c_code" class="text-black mb-3">Introduce tu código de cupón si tienes uno</label>
+              <div class="input-group w-75 couponcode-wrap">
+                <input type="text" class="form-control me-2" id="c_code" placeholder="Código de cupón" aria-label="Código de cupón" aria-describedby="button-addon2">
+                <div class="input-group-append">
+                  <button class="btn btn-black btn-sm" type="button" id="button-addon2">Aplicar</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Detalles del pedido -->
+        <div class="row mb-5">
+          <div class="col-md-12">
+            <h2 class="h3 mb-3 text-black">Tu pedido</h2>
+            <div class="p-3 p-lg-5 border bg-white">
+              <table class="table site-block-order-table mb-5">
+                <thead>
+                  <tr>
+                    <th>Producto</th>
+                    <th>Total</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for item in carrito %}
+                  <tr>
+                    <td>{{ item.producto.nombre }} <strong class="mx-2">x</strong> {{ item.cantidad }}</td>
+                    <td>${{ '%.2f' % (item.producto.precio * item.cantidad) }}</td>
+                  </tr>
+                  {% endfor %}
+                  <tr>
+                    <td class="text-black font-weight-bold"><strong>Subtotal</strong></td>
+                    <td class="text-black">${{ '%.2f' % total }}</td>
+                  </tr>
+                  <tr>
+                    <td class="text-black font-weight-bold"><strong>Total del pedido</strong></td>
+                    <td class="text-black font-weight-bold"><strong>${{ '%.2f' % total }}</strong></td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <!-- Método de pago -->
+              <form action="{{ url_for('procesar_pago') }}" method="POST">
+                {% if direccion_seleccionada_id %}
+                <input type="hidden" name="direccion_envio" value="{{ direccion_seleccionada_id }}">
+                {% endif %}
+
+                <div class="border p-3 mb-3">
+                  <label class="d-block">
+                    <input type="radio" name="metodo_pago" value="tarjeta" checked>
+                    <strong>Tarjeta de crédito o débito (Stripe)</strong>
+                  </label>
+                  <div class="text-muted small">Serás redirigido a un checkout seguro.</div>
+                </div>
+
+                <div class="border p-3 mb-3">
+                  <label class="d-block" role="button" data-bs-toggle="collapse" href="#collapsepaypal" aria-expanded="false" aria-controls="collapsepaypal">
+                    <input type="radio" name="metodo_pago" value="paypal">
+                    <strong>PayPal</strong>
+                  </label>
+                  <div class="collapse" id="collapsepaypal">
+                    <div class="py-2">
+                      <p class="mb-0">Serás redirigido a PayPal para completar tu pago.</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <button type="submit" class="btn btn-black btn-lg py-3 btn-block">Pagar ahora</button>
+                </div>
+              </form>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <!-- </form> -->
+  </div>
+</div>
+
+<!-- Inicio del pie de página -->
+{% include "vistas/bottom.html" %}
+
+<script src="{{ url_for('static', filename='js/zones-api.js') }}"></script>
+<script>
+  // Setup validación de dirección en el formulario
+  const formDireccion = document.querySelector('form[action="/direccion"]');
+  if (formDireccion) {
+    formDireccion.addEventListener('submit', validarDireccionAntesDeSend);
+  }
+</script>

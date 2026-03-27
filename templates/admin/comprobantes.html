@@ -1,0 +1,92 @@
+{% include "admin/vistas/header.html" %}
+{% block content %}
+<div class="container mt-5">
+    <h2>Lista de Comprobantes</h2>
+
+    <table class="table table-bordered table-hover mt-4">
+        <thead class="table-dark">
+            <tr>
+                <th>ID</th>
+                <th>Pedido</th>
+                <th>Archivo</th>
+                <th>Fecha</th>
+                <th>Verificado</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for c in comprobantes.items %}
+            <tr>
+                <td>{{ c.id }}</td>
+                <td>#{{ c.pedido_id }} - {{ pedidos[c.pedido_id].estado }}</td>
+                <td><a href="{{ url_for('static', filename='uploads/' ~ c.archivo) }}" target="_blank">Ver</a></td>
+                <td>{{ c.fecha_subida.strftime('%Y-%m-%d %H:%M') }}</td>
+                <td>{{ 'Sí' if c.verificado else 'No' }}</td>
+                <td>
+                    <!-- Botón editar -->
+                    <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#editarModal{{ c.id }}">Editar</button>
+
+                    <!-- Botón eliminar -->
+                    <form method="POST" action="{{ url_for('admin.eliminar_comprobante', id=c.id) }}" style="display:inline;" onsubmit="return confirm('¿Estás seguro?');">
+                        <button class="btn btn-sm btn-danger">Eliminar</button>
+                    </form>
+                </td>
+            </tr>
+
+            <!-- Modal edición -->
+            <div class="modal fade" id="editarModal{{ c.id }}" tabindex="-1" aria-labelledby="editarModalLabel{{ c.id }}" aria-hidden="true">
+                <div class="modal-dialog">
+                    <form method="POST" action="{{ url_for('admin.editar_comprobante', id=c.id) }}">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="editarModalLabel{{ c.id }}">Editar Comprobante #{{ c.id }}</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                            </div>
+                            <div class="modal-body">
+                                <label class="form-label">¿Verificado?</label>
+                                <select name="verificado" class="form-select">
+                                    <option value="true" {% if c.verificado %}selected{% endif %}>Sí</option>
+                                    <option value="false" {% if not c.verificado %}selected{% endif %}>No</option>
+                                </select>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                <button type="submit" class="btn btn-primary">Guardar</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Paginación -->
+    <nav>
+        <ul class="pagination">
+            {% if comprobantes.has_prev %}
+            <li class="page-item">
+                <a class="page-link" href="{{ url_for('admin.comprobantes', page=comprobantes.prev_num) }}">Anterior</a>
+            </li>
+            {% endif %}
+
+            {% for page_num in comprobantes.iter_pages(left_edge=2, right_edge=2, left_current=2, right_current=2) %}
+                {% if page_num %}
+                    <li class="page-item {% if comprobantes.page == page_num %}active{% endif %}">
+                        <a class="page-link" href="{{ url_for('admin.comprobantes', page=page_num) }}">{{ page_num }}</a>
+                    </li>
+                {% else %}
+                    <li class="page-item disabled"><span class="page-link">…</span></li>
+                {% endif %}
+            {% endfor %}
+
+            {% if comprobantes.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="{{ url_for('admin.comprobantes', page=comprobantes.next_num) }}">Siguiente</a>
+            </li>
+            {% endif %}
+        </ul>
+    </nav>
+</div>
+{% endblock %}
+{% include "admin/vistas/bottom.html" %}

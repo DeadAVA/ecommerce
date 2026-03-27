@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="description" content="A-space Shop - Tu tienda en línea profesional">
+    <meta name="theme-color" content="#FF6B35">
+    
+    <title>{% block title %}A-space Shop - Tienda en Línea{% endblock %}</title>
+    
+    <!-- Estilos -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/professional.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/sb-admin-2.css') }}">
+    
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <!-- Header/Navegación -->
+    <header>
+        <div class="navbar">
+            <a href="{{ url_for('index') }}" class="logo">
+                🛍️ A-space Shop
+            </a>
+            
+            <nav>
+                <ul>
+                    <li><a href="{{ url_for('shop') }}">Tienda</a></li>
+                    <li><a href="{{ url_for('about') }}">Acerca de</a></li>
+                    <li><a href="{{ url_for('contact') }}">Contacto</a></li>
+                    
+                    {% if current_user.is_authenticated %}
+                        <li><a href="{{ url_for('cart') }}">🛒 Carrito</a></li>
+                        <li><a href="{{ url_for('orders') }}">Mis Pedidos</a></li>
+                        
+                        {% if current_user.is_admin %}
+                            <li><a href="{{ url_for('admin_panel') }}">Admin</a></li>
+                        {% endif %}
+                    {% endif %}
+                </ul>
+            </nav>
+            
+            <div class="user-menu">
+                {% if current_user.is_authenticated %}
+                    <div class="user-profile">
+                        <span>👤 {{ current_user.nombre }}</span>
+                        <div style="position: relative; display: inline-block;">
+                            <button style="background: none; border: none; color: white; cursor: pointer;">
+                                ▼
+                            </button>
+                            <div style="position: absolute; background: white; color: black; min-width: 150px; display: none;">
+                                <a href="{{ url_for('profile') }}" style="display: block; padding: 0.5rem 1rem; text-decoration: none; color: black;">
+                                    Mi Perfil
+                                </a>
+                                <a href="{{ url_for('logout') }}" data-logout style="display: block; padding: 0.5rem 1rem; text-decoration: none; color: black; border-top: 1px solid #ccc;">
+                                    Cerrar Sesión
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                {% else %}
+                    <a href="{{ url_for('login') }}" class="btn btn-outline btn-sm">Iniciar Sesión</a>
+                    <a href="{{ url_for('register') }}" class="btn btn-primary btn-sm">Registrarse</a>
+                {% endif %}
+            </div>
+        </div>
+    </header>
+
+    <!-- Alertas -->
+    <div data-alerts class="container mt-2">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    {% if category == 'success' %}
+                        <div class="alert alert-success">
+                            ✓ {{ message }}
+                            <button type="button" onclick="this.parentElement.remove()" style="background: none; border: none; cursor: pointer; float: right;">×</button>
+                        </div>
+                    {% elif category == 'danger' %}
+                        <div class="alert alert-danger">
+                            ✗ {{ message }}
+                            <button type="button" onclick="this.parentElement.remove()" style="background: none; border: none; cursor: pointer; float: right;">×</button>
+                        </div>
+                    {% elif category == 'warning' %}
+                        <div class="alert alert-warning">
+                            ⚠ {{ message }}
+                            <button type="button" onclick="this.parentElement.remove()" style="background: none; border: none; cursor: pointer; float: right;">×</button>
+                        </div>
+                    {% else %}
+                        <div class="alert alert-info">
+                            ℹ {{ message }}
+                            <button type="button" onclick="this.parentElement.remove()" style="background: none; border: none; cursor: pointer; float: right;">×</button>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </div>
+
+    <!-- Contenido Principal -->
+    <main class="container" style="min-height: calc(100vh - 200px); padding-top: 2rem; padding-bottom: 2rem;">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Acerca de Nosotros</h3>
+                <p>A-space Shop es tu tienda en línea de confianza con los mejores productos y servicio.</p>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Enlaces Rápidos</h3>
+                <ul>
+                    <li><a href="{{ url_for('shop') }}">Tienda</a></li>
+                    <li><a href="{{ url_for('about') }}">Acerca de</a></li>
+                    <li><a href="{{ url_for('contact') }}">Contacto</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Atención al Cliente</h3>
+                <ul>
+                    <li><a href="#">Preguntas Frecuentes</a></li>
+                    <li><a href="#">Política de Devoluciones</a></li>
+                    <li><a href="#">Términos y Condiciones</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Contacto</h3>
+                <ul>
+                    <li><a href="mailto:info@aspaceshot.com">info@aspaceshot.com</a></li>
+                    <li><a href="tel:+525551234567">+52 (555) 123-4567</a></li>
+                    <li>Soporte disponible 24/7</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2026 A-space Shop. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="{{ url_for('static', filename='js/jquery.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+    
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

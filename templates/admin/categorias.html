@@ -1,0 +1,114 @@
+{% include "admin/vistas/header.html" %}
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h3>Categorías</h3>
+        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalNuevaCategoria">+ Nueva Categoría</button>
+    </div>
+
+    <!-- Tabla -->
+    <table class="table table-bordered table-hover">
+        <thead class="table-dark">
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for categoria in categorias.items %}
+            <tr>
+                <td>{{ categoria.id }}</td>
+                <td>{{ categoria.nombre }}</td>
+                <td>
+                    <button class="btn btn-sm btn-warning btn-editar"
+                            data-id="{{ categoria.id }}"
+                            data-nombre="{{ categoria.nombre }}"
+                            data-bs-toggle="modal"
+                            data-bs-target="#modalEditarCategoria">Editar</button>
+                    <a href="{{ url_for('admin.eliminar_categoria', id=categoria.id) }}"
+                       class="btn btn-sm btn-danger"
+                       onclick="return confirm('¿Estás seguro de eliminar esta categoría?')">Eliminar</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Paginación -->
+    <nav>
+        <ul class="pagination">
+            {% if categorias.has_prev %}
+                <li class="page-item"><a class="page-link" href="{{ url_for('admin.categorias', page=categorias.prev_num) }}">Anterior</a></li>
+            {% else %}
+                <li class="page-item disabled"><span class="page-link">Anterior</span></li>
+            {% endif %}
+
+            {% for page_num in categorias.iter_pages() %}
+                {% if page_num %}
+                    <li class="page-item {% if categorias.page == page_num %}active{% endif %}">
+                        <a class="page-link" href="{{ url_for('admin.categorias', page=page_num) }}">{{ page_num }}</a>
+                    </li>
+                {% else %}
+                    <li class="page-item disabled"><span class="page-link">…</span></li>
+                {% endif %}
+            {% endfor %}
+
+            {% if categorias.has_next %}
+                <li class="page-item"><a class="page-link" href="{{ url_for('admin.categorias', page=categorias.next_num) }}">Siguiente</a></li>
+            {% else %}
+                <li class="page-item disabled"><span class="page-link">Siguiente</span></li>
+            {% endif %}
+        </ul>
+    </nav>
+</div>
+
+<!-- Modal Nueva Categoría -->
+<div class="modal fade" id="modalNuevaCategoria" tabindex="-1" aria-labelledby="modalNuevaCategoriaLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form method="POST" action="{{ url_for('admin.nueva_categoria') }}">
+        {{ form.hidden_tag() }}
+        <div class="modal-header">
+          <h5 class="modal-title">Nueva Categoría</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3">
+            {{ form.nombre.label(class="form-label") }}
+            {{ form.nombre(class="form-control") }}
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-success">Guardar</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Editar Categoría -->
+<div class="modal fade" id="modalEditarCategoria" tabindex="-1" aria-labelledby="modalEditarCategoriaLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form method="POST" id="formEditarCategoria">
+        {{ form.hidden_tag() }}
+        <div class="modal-header">
+          <h5 class="modal-title">Editar Categoría</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3">
+            {{ form.nombre.label(class="form-label") }}
+            <input type="text" name="nombre" id="editarNombre" class="form-control" required>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-success">Actualizar</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% include "admin/vistas/bottom.html" %}

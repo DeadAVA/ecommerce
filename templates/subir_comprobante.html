@@ -1,0 +1,26 @@
+{% include "vistas/header.html" %}
+  <!-- End Header/Navigation -->
+
+  <main class="container my-5">
+    <h2 class="mb-4">Subir Comprobante de Transferencia</h2>
+
+    <form method="POST" enctype="multipart/form-data" class="w-100" style="max-width: 500px;">
+      <div class="mb-3">
+        <label for="archivo" class="form-label fw-semibold">Archivo:</label>
+        <input type="file" id="archivo" name="archivo" accept=".jpg,.jpeg,.png,.pdf" class="form-control" required />
+        <div class="form-text">Formatos permitidos: JPG, JPEG, PNG, PDF.</div>
+      </div>
+      <button type="submit" class="btn btn-primary">Subir Comprobante</button>
+    </form>
+  </main>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<!-- Start Footer Section -->
+{% include "vistas/bottom.html" %}

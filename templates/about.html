@@ -1,0 +1,92 @@
+{% include "vistas/header.html" %}
+
+<!-- Inicio Sección Hero -->
+<div class="hero">
+  <div class="container-xxl">
+    <div class="row justify-content-between align-items-center">
+      <div class="col-lg-5">
+        <div class="intro-excerpt">
+          <h1>Sobre Nosotros</h1>
+          <p class="mb-4">
+            Somos una tienda en línea especializada en productos inspirados en el mundo de la aviación. Diseñamos y curamos artículos únicos que celebran la pasión por volar: desde accesorios para pilotos y entusiastas, hasta ropa temática, decoración estilo cabina y regalos para amantes del aire. Nuestro objetivo es fusionar utilidad, estética aeronáutica y coleccionismo en cada pieza.
+          </p>
+          <p><a href="/tienda" class="btn btn-secondary me-2">Comprar Ahora</a><a href="/catalogo" class="btn btn-white-outline">Explorar</a></p>
+        </div>
+      </div>
+      <div class="col-lg-7">
+        <div class="hero-img-wrap">
+          <!-- Avión en pista / cabina -->
+          <img src="https://source.unsplash.com/1600x900/?airplane,runway" class="img-fluid" alt="Avión despegando en pista">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Fin Sección Hero -->
+
+<!-- Inicio Sección Por Qué Elegirnos -->
+<div class="why-choose-section">
+  <div class="container-xxl">
+    <div class="row justify-content-between align-items-center">
+      <div class="col-lg-6">
+        <h2 class="section-title">¿Por Qué Elegirnos?</h2>
+        <p>
+          Nuestra propuesta combina diseño exclusivo y funcionalidad aeronáutica para crear piezas que no solo se ven bien, sino que transmiten la pasión por los cielos. Cada producto está pensado para pilotos, estudiantes de aviación, coleccionistas y fanáticos que buscan algo auténtico y único.
+        </p>
+
+        <div class="row my-5">
+          <div class="col-6 col-md-6">
+            <div class="feature">
+              <div class="icon">
+                <img src="{{ url_for('static', filename='images/truck.svg') }}" alt="Envío" class="img-fluid">
+              </div>
+              <h3>Envío Rápido</h3>
+              <p>Enviamos a todo el país con empaques seguros y listos para regalo.</p>
+            </div>
+          </div>
+
+          <div class="col-6 col-md-6">
+            <div class="feature">
+              <div class="icon">
+                <img src="{{ url_for('static', filename='images/bag.svg') }}" alt="Compra fácil" class="img-fluid">
+              </div>
+              <h3>Compra Fácil</h3>
+              <p>Navega por nuestras categorías claras: “Regalos para pilotos”, “Decoración” y “Flight Sim”.</p>
+            </div>
+          </div>
+
+          <div class="col-6 col-md-6">
+            <div class="feature">
+              <div class="icon">
+                <img src="{{ url_for('static', filename='images/support.svg') }}" alt="Soporte" class="img-fluid">
+              </div>
+              <h3>Atención Personalizada</h3>
+              <p>Somos un equipo apasionado dispuesto a ayudarte a encontrar el regalo perfecto.</p>
+            </div>
+          </div>
+
+          <div class="col-6 col-md-6">
+            <div class="feature">
+              <div class="icon">
+                <img src="{{ url_for('static', filename='images/return.svg') }}" alt="Devoluciones" class="img-fluid">
+              </div>
+              <h3>Sin Complicaciones</h3>
+              <p>Garantizamos satisfacción con políticas de devolución simples y seguras.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-5">
+        <div class="img-wrap">
+          <!-- Foto de cockpit / jets alineados -->
+          <img src="https://source.unsplash.com/900x520/?cockpit,aviation" alt="Cabina de avión" class="img-fluid">
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+<!-- Fin Sección Por Qué Elegirnos -->
+
+{% include "vistas/bottom.html" %}

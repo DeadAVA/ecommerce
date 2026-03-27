@@ -1,0 +1,109 @@
+{% include "admin/vistas/header.html" %}
+
+<div class="container mt-4">
+    <h2 class="mb-4">Direcciones de Envío</h2>
+
+    <!-- Botón para abrir modal -->
+    <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#direccionModal" onclick="abrirModal()">Agregar Dirección</button>
+
+    <!-- Tabla de direcciones -->
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Usuario</th>
+                <th>Dirección</th>
+                <th>Colonia</th>
+                <th>Ciudad</th>
+                <th>Estado</th>
+                <th>CP</th>
+                <th>Teléfono</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for d in direcciones %}
+            <tr>
+                <td>{{ d.id }}</td>
+                <td>{{ d.usuario.nombre }}</td>
+                <td>{{ d.direccion }}</td>
+                <td>{{ d.colonia }}</td>
+                <td>{{ d.ciudad }}</td>
+                <td>{{ d.estado }}</td>
+                <td>{{ d.codigo_postal }}</td>
+                <td>{{ d.telefono }}</td>
+                <td>
+                    <button class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#direccionModal" onclick="editarDireccion({{ d.id }}, '{{ d.usuario_id }}', '{{ d.direccion }}', '{{ d.colonia }}', '{{ d.ciudad }}', '{{ d.estado }}', '{{ d.codigo_postal }}', '{{ d.pais }}', '{{ d.telefono }}', `{{ d.referencias|e }}`)">Editar</button>
+                    <form method="POST" action="{{ url_for('admin.eliminar_direccion', id=d.id) }}" style="display:inline-block;" onsubmit="return confirm('¿Estás seguro de eliminar esta dirección?');">
+                        <button type="submit" class="btn btn-sm btn-danger">Eliminar</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Paginación -->
+    <nav>
+        <ul class="pagination">
+            {% if pagination.has_prev %}
+            <li class="page-item"><a class="page-link" href="{{ url_for('admin.direcciones', page=pagination.prev_num) }}">Anterior</a></li>
+            {% else %}
+            <li class="page-item disabled"><span class="page-link">Anterior</span></li>
+            {% endif %}
+
+            {% for page_num in pagination.iter_pages() %}
+            {% if page_num %}
+                {% if page_num == pagination.page %}
+                    <li class="page-item active"><span class="page-link">{{ page_num }}</span></li>
+                {% else %}
+                    <li class="page-item"><a class="page-link" href="{{ url_for('admin.direcciones', page=page_num) }}">{{ page_num }}</a></li>
+                {% endif %}
+            {% else %}
+                <li class="page-item disabled"><span class="page-link">…</span></li>
+            {% endif %}
+            {% endfor %}
+
+            {% if pagination.has_next %}
+            <li class="page-item"><a class="page-link" href="{{ url_for('admin.direcciones', page=pagination.next_num) }}">Siguiente</a></li>
+            {% else %}
+            <li class="page-item disabled"><span class="page-link">Siguiente</span></li>
+            {% endif %}
+        </ul>
+    </nav>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="direccionModal" tabindex="-1" aria-labelledby="direccionModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <form method="POST" action="{{ url_for('admin.direcciones') }}">
+        {{ form.hidden_tag() }}
+        <input type="hidden" name="editar_id" id="editar_id">
+        <div class="modal-header">
+          <h5 class="modal-title" id="direccionModalLabel">Agregar / Editar Dirección</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <div class="modal-body">
+          <div class="row g-3">
+            <div class="col-md-6">{{ form.usuario_id.label }}{{ form.usuario_id(class="form-control") }}</div>
+            <div class="col-md-6">{{ form.telefono.label }}{{ form.telefono(class="form-control") }}</div>
+            <div class="col-md-6">{{ form.direccion.label }}{{ form.direccion(class="form-control") }}</div>
+            <div class="col-md-6">{{ form.colonia.label }}{{ form.colonia(class="form-control") }}</div>
+            <div class="col-md-6">{{ form.ciudad.label }}{{ form.ciudad(class="form-control") }}</div>
+            <div class="col-md-6">{{ form.estado.label }}{{ form.estado(class="form-control") }}</div>
+            <div class="col-md-6">{{ form.codigo_postal.label }}{{ form.codigo_postal(class="form-control") }}</div>
+            <div class="col-md-6">{{ form.pais.label }}{{ form.pais(class="form-control") }}</div>
+            <div class="col-md-12">{{ form.referencias.label }}{{ form.referencias(class="form-control") }}</div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-success">{{ form.submit.label }}</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% include "admin/vistas/bottom.html" %}

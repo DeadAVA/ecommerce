@@ -1,0 +1,171 @@
+{% include "admin/vistas/header.html" %}
+
+<div class="container mt-4">
+    <h2>Productos</h2>
+
+    <!-- Botón para modal de nuevo producto -->
+    <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#productoModal">Nuevo Producto</button>
+
+    <!-- Tabla -->
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover align-middle">
+            <thead class="table-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Descripción</th>
+                    <th>Precio</th>
+                    <th>Imagen</th>
+                    <th>Categoría</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for producto in productos.items %}
+                <tr>
+                    <td>{{ producto.id }}</td>
+                    <td>{{ producto.nombre }}</td>
+                    <td>{{ producto.descripcion }}</td>
+                    <td>${{ producto.precio }}</td>
+                    <td>
+                        {% if producto.imagen_url %}
+                            <img src="{{ producto.imagen_url }}" alt="" width="60">
+                        {% else %}
+                            Sin imagen
+                        {% endif %}
+                    </td>
+                    <td>{{ producto.categoria.nombre if producto.categoria else 'Sin categoría' }}</td>
+                    <td>
+                        <!-- Botón editar que carga el modal -->
+                        <button class="btn btn-sm btn-warning"
+                                onclick="cargarProducto({{ producto.id }}, '{{ producto.nombre|escape }}', '{{ producto.descripcion|escape }}', '{{ producto.precio }}', '{{ producto.categoria_id or '' }}', '{{ producto.imagen_url or '' }}')"
+                                data-bs-toggle="modal" data-bs-target="#editarProductoModal">
+                            Editar
+                        </button>
+
+                        <form action="{{ url_for('admin.eliminar_producto', id=producto.id) }}" method="post" style="display:inline;">
+                            <button class="btn btn-sm btn-danger" onclick="return confirm('¿Eliminar producto?')">Eliminar</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <!-- Paginación -->
+        <nav>
+            <ul class="pagination justify-content-center">
+                {% if productos.has_prev %}
+                    <li class="page-item"><a class="page-link" href="{{ url_for('admin.productos', page=productos.prev_num) }}">Anterior</a></li>
+                {% else %}
+                    <li class="page-item disabled"><span class="page-link">Anterior</span></li>
+                {% endif %}
+
+                {% for page_num in productos.iter_pages(left_edge=1, right_edge=1, left_current=2, right_current=2) %}
+                    {% if page_num %}
+                        {% if page_num == productos.page %}
+                            <li class="page-item active"><span class="page-link">{{ page_num }}</span></li>
+                        {% else %}
+                            <li class="page-item"><a class="page-link" href="{{ url_for('admin.productos', page=page_num) }}">{{ page_num }}</a></li>
+                        {% endif %}
+                    {% else %}
+                        <li class="page-item disabled"><span class="page-link">…</span></li>
+                    {% endif %}
+                {% endfor %}
+
+                {% if productos.has_next %}
+                    <li class="page-item"><a class="page-link" href="{{ url_for('admin.productos', page=productos.next_num) }}">Siguiente</a></li>
+                {% else %}
+                    <li class="page-item disabled"><span class="page-link">Siguiente</span></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
+</div>
+
+<!-- Modal nuevo producto -->
+<div class="modal fade" id="productoModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <form method="post" action="{{ url_for('admin.nuevo_producto') }}" enctype="multipart/form-data" class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Nuevo Producto</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body row g-3">
+        <div class="col-md-6">
+          <label class="form-label">Nombre</label>
+          <input type="text" class="form-control" name="nombre" required>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Precio</label>
+          <input type="number" step="0.01" class="form-control" name="precio" required>
+        </div>
+        <div class="col-12">
+          <label class="form-label">Descripción</label>
+          <textarea class="form-control" name="descripcion" rows="3"></textarea>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Categoría</label>
+          <select name="categoria_id" class="form-select">
+            <option value="">-- Selecciona --</option>
+            {% for cat in categorias %}
+              <option value="{{ cat.id }}">{{ cat.nombre }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Imagen</label>
+          <input type="file" name="imagen" class="form-control" accept="image/*">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-success">Guardar</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Modal editar producto (solo uno) -->
+<div class="modal fade" id="editarProductoModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <form method="post" id="editarProductoForm" enctype="multipart/form-data" class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Editar Producto</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body row g-3">
+        <div class="col-md-6">
+          <label class="form-label">Nombre</label>
+          <input type="text" class="form-control" name="nombre" id="editar-nombre" required>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Precio</label>
+          <input type="number" step="0.01" class="form-control" name="precio" id="editar-precio" required>
+        </div>
+        <div class="col-12">
+          <label class="form-label">Descripción</label>
+          <textarea class="form-control" name="descripcion" rows="3" id="editar-descripcion"></textarea>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Categoría</label>
+          <select name="categoria_id" class="form-select" id="editar-categoria">
+            <option value="">-- Selecciona --</option>
+            {% for cat in categorias %}
+              <option value="{{ cat.id }}">{{ cat.nombre }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Imagen (opcional)</label>
+          <input type="file" name="imagen" class="form-control" accept="image/*">
+          <div id="imagen-actual" class="mt-2"></div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-success">Guardar Cambios</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+{% include "admin/vistas/bottom.html" %}

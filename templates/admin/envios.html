@@ -1,0 +1,114 @@
+{% include "admin/vistas/header.html" %}
+
+<div class="container mt-4">
+    <h2>Gestión de Envíos</h2>
+
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover align-middle">
+            <thead class="table-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Pedido</th>
+                    <th>Usuario</th>
+                    <th>Estado</th>
+                    <th>Número de Rastreo</th>
+                    <th>Dirección</th>
+                    <th>Fecha</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+        <tbody>
+            {% for envio in envios.items %}
+            <tr>
+                <td>{{ envio.id }}</td>
+                <td>{{ envio.pedido_id }}</td>
+                <td>{{ envio.usuario_id }}</td>
+                <td>{{ envio.estado }}</td>
+                <td>{{ envio.numero_rastreo }}</td>
+                <td>{{ envio.direccion_envio_id }}</td>
+                <td>{{ envio.fecha_creacion.strftime('%Y-%m-%d') }}</td>
+                <td>
+                    <!-- Botón para abrir modal -->
+                    <button class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#editarModal{{ envio.id }}">Editar</button>
+                    <form action="{{ url_for('admin.eliminar_envio', id=envio.id) }}" method="post" style="display:inline;">
+                        <button class="btn btn-sm btn-danger" onclick="return confirm('¿Eliminar este envío?')">Eliminar</button>
+                    </form>
+                </td>
+            </tr>
+
+            <!-- Modal editar -->
+            <div class="modal fade" id="editarModal{{ envio.id }}" tabindex="-1" aria-labelledby="editarModalLabel{{ envio.id }}" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                <form method="post" action="{{ url_for('admin.editar_envio', id=envio.id) }}">
+                    <div class="modal-header">
+                    <h5 class="modal-title" id="editarModalLabel{{ envio.id }}">Editar Envío</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                    </div>
+                    <div class="modal-body">
+                    <label>Estado:</label>
+                    <select name="estado" class="form-select mb-2" required>
+                        {% for estado in ['pendiente', 'procesado', 'aceptado', 'enviado', 'entregado', 'cancelado'] %}
+                        <option value="{{ estado }}" {% if envio.estado == estado %}selected{% endif %}>{{ estado }}</option>
+                        {% endfor %}
+                    </select>
+
+                    <label>Número de rastreo:</label>
+                    <input type="text" name="numero_rastreo" value="{{ envio.numero_rastreo }}" class="form-control mb-2" required>
+
+                    <label>Observaciones:</label>
+                    <textarea name="observaciones" class="form-control mb-2">{{ envio.observaciones }}</textarea>
+
+                    <label>Dirección de envío:</label>
+                    <select name="direccion_envio_id" class="form-select" required>
+                        {% for direccion in direcciones %}
+                        <option value="{{ direccion.id }}" {% if envio.direccion_envio_id == direccion.id %}selected{% endif %}>
+                            {{ direccion.direccion }}, {{ direccion.colonia }}, {{ direccion.ciudad }}, {{ direccion.estado }}, CP: {{ direccion.codigo_postal }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                    </div>
+                    <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Guardar cambios</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    </div>
+                </form>
+                </div>
+            </div>
+            </div>
+
+            {% endfor %}
+        </tbody>
+        </table>
+    </div>
+
+    <!-- Paginación -->
+    <nav>
+        <ul class="pagination justify-content-center">
+            {% if envios.has_prev %}
+                <li class="page-item"><a class="page-link" href="{{ url_for('admin.listar_envios', page=envios.prev_num) }}">Anterior</a></li>
+            {% else %}
+                <li class="page-item disabled"><span class="page-link">Anterior</span></li>
+            {% endif %}
+
+            {% for p in envios.iter_pages() %}
+                {% if p %}
+                    {% if p == envios.page %}
+                        <li class="page-item active"><span class="page-link">{{ p }}</span></li>
+                    {% else %}
+                        <li class="page-item"><a class="page-link" href="{{ url_for('admin.listar_envios', page=p) }}">{{ p }}</a></li>
+                    {% endif %}
+                {% else %}
+                    <li class="page-item disabled"><span class="page-link">…</span></li>
+                {% endif %}
+            {% endfor %}
+
+            {% if envios.has_next %}
+                <li class="page-item"><a class="page-link" href="{{ url_for('admin.listar_envios', page=envios.next_num) }}">Siguiente</a></li>
+            {% else %}
+                <li class="page-item disabled"><span class="page-link">Siguiente</span></li>
+            {% endif %}
+        </ul>
+    </nav>
+</div>
+{% include "admin/vistas/bottom.html" %}

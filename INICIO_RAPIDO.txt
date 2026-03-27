@@ -1,0 +1,199 @@
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                    🎯 GUÍA RÁPIDA DE INICIO                                   ║
+║                   Ecommerce con HTTPS y Seguridad Mejorada                     ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+## 📋 PASO 1: CONFIGURACIÓN INICIAL (5 minutos)
+
+### 1.1 Copia el archivo de entorno
+```bash
+copy .env.example .env
+```
+
+### 1.2 Edita el archivo .env
+Abre `.env` en tu editor y configura:
+```env
+SECRET_KEY=una_clave_muy_segura_y_unica_minimo_32_caracteres
+DATABASE_URI=mysql+mysqlconnector://usuario:contraseña@localhost/ecommerce
+MAIL_USERNAME=tu_email@gmail.com
+MAIL_PASSWORD=tu_contraseña_app_gmail
+POSTAL_NINJA_API_KEY=tu_api_key
+```
+
+## 🔐 PASO 2: GENERAR CERTIFICADOS SSL (2 minutos)
+
+### Solo necesario para HTTPS en desarrollo
+
+```bash
+python generate_certs.py
+```
+
+Esto crea:
+- `certs/cert.pem` - Certificado
+- `certs/key.pem` - Clave privada
+
+## 📦 PASO 3: INSTALAR DEPENDENCIAS (3 minutos)
+
+```bash
+pip install -r requirements.txt
+```
+
+## 🚀 PASO 4: EJECUTAR LA APLICACIÓN
+
+### Opción A: HTTP (Development básico)
+```bash
+python app.py
+Accede a: http://localhost:5000
+```
+
+### Opción B: HTTPS (Development seguro)
+```bash
+python app.py
+Accede a: https://localhost
+```
+
+⚠️  Si el navegador muestra "Conexión no segura":
+- Click en "Avanzado"
+- Click en "Continuar a localhost" (o similar)
+- Esto es normal con certificados autofirmados
+
+## ✅ VERIFICACIÓN
+
+Después de iniciar, verifica:
+
+□ Página de inicio carga correctamente
+□ Puedes registrar un nuevo usuario
+□ El correo de verificación se envía
+□ Puedes iniciar sesión
+□ Los headers de seguridad están presentes
+
+Para verificar headers en el navegador:
+1. Abre DevTools (F12)
+2. Vaya a Network
+3. Carga cualquier página
+4. Busca en Response Headers:
+   - Strict-Transport-Security ✅
+   - Content-Security-Policy ✅
+   - X-Content-Type-Options ✅
+
+## 🆘 ERRORES COMUNES
+
+### Error: "Permission denied" puerto 443
+→ Ejecuta como Administrador o usa `python app.py` (HTTP en puerto 5000)
+
+### Error: "No such file or directory: certs/cert.pem"
+→ Ejecuta: `python generate_certs.py`
+
+### Error: Base de datos no conecta
+→ Verifica DATABASE_URI en .env
+→ Asegúrate que MySQL está corriendo
+
+### Error: Correos no se envían
+→ Verifica MAIL_USERNAME y MAIL_PASSWORD en .env
+→ Para Gmail: usa contraseña de aplicación, no la contraseña normal
+→ https://support.google.com/accounts/answer/185833
+
+## 📚 DOCUMENTACIÓN COMPLETA
+
+Consulta estos archivos:
+- `HTTPS_SETUP.md` - Guía detallada de HTTPS
+- `CAMBIOS_REALIZADOS.md` - Listado técnico completo
+- `README_ARREGLOS.md` - Resumen ejecutivo
+
+## 🎓 PRINCIPALES MEJORAS REALIZADAS
+
+✨ Seguridad
+   ✅ HTTPS configurado
+   ✅ Headers de seguridad (HSTS, CSP, etc.)
+   ✅ Cookies seguras (Secure, HttpOnly, SameSite)
+   ✅ Validación de inputs mejorada
+   ✅ Manejo de errores con try-catch
+
+🐛 Bugs Corregidos
+   ✅ Indentación de stock (línea 548)
+   ✅ Mejor limpieza de carrito
+   ✅ Validación de stock antes de pagar
+
+📊 Código Mejorado
+   ✅ Logging de eventos
+   ✅ Variables de entorno
+   ✅ Transacciones más seguras
+
+## 🔄 FLUJO DE DESARROLLO
+
+1. Edita código
+2. Guarda cambios
+3. Flask detecta cambios y recarga automáticamente
+4. Actualiza navegador para ver cambios
+
+Si no recarga automáticamente:
+- Cierra la aplicación (Ctrl+C)
+- Ejecuta de nuevo: `python app.py`
+
+## 📝 ESTRUCTURA DE DIRECTORIOS
+
+```
+Ecommerce/
+├── app.py                    # Aplicación principal (ACTUALIZADO ✅)
+├── config.py                 # Configuración (ACTUALIZADO ✅)
+├── requirements.txt          # Dependencias
+├── generate_certs.py         # Generador de certificados (NUEVO ✅)
+├── .env.example              # Plantilla de variables (NUEVO ✅)
+├── .env                      # Variables de entorno (CREAR ✅)
+├── certs/                    # Certificados SSL (CREAR ✅)
+│   ├── cert.pem
+│   └── key.pem
+├── models/                   # Modelos de datos
+├── templates/                # Plantillas HTML
+├── static/                   # Assets estáticos
+└── HTTPS_SETUP.md            # Documentación (NUEVO ✅)
+```
+
+## 💡 TIPS ÚTILES
+
+1. **Para resetear base de datos**:
+   ```bash
+   # Eliminar tablas y recrearlas
+   python -c "from app import app, db; app.app_context().push(); db.drop_all(); db.create_all()"
+   ```
+
+2. **Para ejecutar en puerto diferente**:
+   Edita la última línea de app.py:
+   ```python
+   app.run(debug=True, port=8000)
+   ```
+
+3. **Para usar en red local**:
+   ```python
+   app.run(debug=True, host='0.0.0.0')  # Accede desde otra máquina con tu IP
+   ```
+
+4. **Para ver logs más detallados**:
+   Edita config.py:
+   ```python
+   logging.basicConfig(level=logging.DEBUG)
+   ```
+
+## 🎯 PRÓXIMOS PASOS CUANDO ESTÉ LISTO PARA PRODUCCIÓN
+
+1. Obtener certificado válido de Let's Encrypt
+2. Cambiar `debug=False` en app.py
+3. Usar Gunicorn + Nginx
+4. Base de datos remota
+5. Configurar backups automáticos
+6. Implementar rate limiting
+7. Agregar monitoreo
+
+## 📞 SOPORTE
+
+Si tienes problemas:
+1. Revisa la sección "ERRORES COMUNES"
+2. Consulta HTTPS_SETUP.md
+3. Revisa los logs en la terminal
+4. Verifica que todas las variables de .env están configuradas
+
+═══════════════════════════════════════════════════════════════════════════════
+
+¡Listo! Sigue los pasos y tu aplicación estará ejecutándose con HTTPS y seguridad mejorada.
+
+Última actualización: 23 de enero de 2026

@@ -1,0 +1,128 @@
+{% include "admin/vistas/header.html" %}
+
+<div class="container mt-4">
+  <h2>Panel de Control</h2>
+
+  <!-- Resumen -->
+  <div class="row my-4">
+    <div class="col-md-3">
+      <div class="card text-white bg-primary">
+        <div class="card-body">
+          <h5 class="card-title">Ventas Totales</h5>
+          <p class="card-text">${{ total_ventas | round(2) }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card text-white bg-success">
+        <div class="card-body">
+          <h5 class="card-title">Ganancias</h5>
+          <p class="card-text">${{ ganancias | round(2) }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card text-white bg-warning">
+        <div class="card-body">
+          <h5 class="card-title">Usuarios</h5>
+          <p class="card-text">{{ total_usuarios }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card text-white bg-dark">
+        <div class="card-body">
+          <h5 class="card-title">Inventario</h5>
+          <p class="card-text">{{ inventario_total }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Gráfico -->
+  <div class="card mb-4">
+    <div class="card-body">
+      <h5 class="card-title">Ventas Últimos 6 Meses</h5>
+      <!-- Dentro del template, antes del canvas o donde sea visible en el DOM -->
+        <div id="ventas-data"
+            data-labels='{{ ventas_por_mes | map(attribute="mes") | list | tojson | safe }}'
+            data-values='{{ ventas_por_mes | map(attribute="total") | list | tojson | safe }}'>
+        </div>
+
+      <canvas id="ventasChart"></canvas>
+    </div>
+  </div>
+
+  <!-- Inventario de productos -->
+<div class="card mb-4">
+  <div class="card-body">
+    <h5 class="card-title">Inventario por Producto</h5>
+    <div class="table-responsive">
+      <table class="table table-bordered table-hover">
+        <thead class="table-light">
+          <tr>
+            <th>Nombre</th>
+            <th>Categoría</th>
+            <th>Stock</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for producto in productos %}
+          <tr>
+            <td>{{ producto.nombre }}</td>
+            <td>{{ producto.categoria.nombre if producto.categoria else 'Sin categoría' }}</td>
+            <td>
+              <span class="badge 
+                {% if producto.stock <= 3 %}bg-danger
+                {% elif producto.stock > 10 %}bg-success
+                {% else %}bg-warning text-dark
+                {% endif %}">
+                {{ producto.stock }}
+              </span>
+            </td>
+          </tr>
+          {% else %}
+          <tr>
+            <td colspan="3" class="text-center">No hay productos registrados.</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+
+  <!-- Pedidos pendientes -->
+  <div class="row">
+    <div class="col-md-6">
+      <h5>Por Comprobar</h5>
+      <ul class="list-group">
+        {% for p in pedidos_pendientes_comprobar %}
+        <li class="list-group-item d-flex justify-content-between">
+          Pedido #{{ p.id }} - ${{ p.total }}
+          <span class="badge bg-secondary">{{ p.estado }}</span>
+        </li>
+        {% else %}
+        <li class="list-group-item">No hay pedidos pendientes.</li>
+        {% endfor %}
+      </ul>
+    </div>
+    <div class="col-md-6">
+      <h5>Por Enviar</h5>
+      <ul class="list-group">
+        {% for p in pedidos_pendientes_enviar %}
+        <li class="list-group-item d-flex justify-content-between">
+          Pedido #{{ p.id }} - ${{ p.total }}
+          <span class="badge bg-warning">{{ p.estado }}</span>
+        </li>
+        {% else %}
+        <li class="list-group-item">No hay pedidos por enviar.</li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+</div>
+
+
+{% include "admin/vistas/bottom.html" %}

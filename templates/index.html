@@ -1,0 +1,356 @@
+{% include "vistas/header.html" %}
+
+		
+  <!-- Start Hero Section -->
+  <div class="hero">
+    <div class="container-xxl">
+      <div class="row justify-content-between align-items-center">
+        <div class="col-lg-5">
+          <div class="intro-excerpt">
+            <h1>Aeroespacial <span class="d-block">para Aficionados y Entusiastas</span></h1>
+            <p class="mb-4">Descubre nuestra colección exclusiva de ropa, gorras, pulseras y accesorios inspirados en la exploración espacial y la ingeniería aeroespacial.</p>
+            <p>
+              <a href="" class="btn btn-secondary me-2">Comprar Ahora</a>
+              <a href="#" class="btn btn-white-outline">Explorar</a>
+            </p>
+          </div>
+        </div>
+        <div class="col-lg-7">
+          <div class="hero-img-wrap">
+            <img src="https://dummyimage.com/1200x600/dee2e6/6c757d.jpg" class="img-fluid" alt="Productos aeroespaciales">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- End Hero Section -->
+
+  <!-- Start Product Section -->
+  <div class="product-section">
+    <div class="container-xxl">
+      <div class="row">
+
+        <!-- Start Column 1 -->
+        <div class="col-md-12 col-lg-3 mb-5 mb-lg-0">
+          <h2 class="mb-4 section-title">Diseñados con materiales de alta calidad</h2>
+          <p class="mb-4">Cada producto está cuidadosamente elaborado para reflejar la pasión por la ciencia y la tecnología aeroespacial, combinando estilo y comodidad para los aficionados.</p>
+          <p><a href="{{ url_for('shop') }}" class="btn">Explorar</a></p>
+        </div>
+        <!-- End Column 1 -->
+
+        <!-- Start Column 2 -->
+        <div class="col-12 col-md-4 col-lg-3 mb-5 mb-md-0">
+          <a class="product-item" href="{{ url_for('cart') }}">
+            <img src="https://dummyimage.com/600x400/dee2e6/6c757d.jpg" class="img-fluid product-thumbnail" alt="Gorra espacial">
+            <h3 class="product-title">Gorra Orbital</h3>
+            <strong class="product-price">$25.00</strong>
+            <span class="icon-cross">
+              <img src="{{ url_for('static', filename='images/cross.svg') }}" class="img-fluid" alt="Agregar">
+            </span>
+          </a>
+        </div>
+        <!-- End Column 2 -->
+
+        <!-- Start Column 3 -->
+        <div class="col-12 col-md-4 col-lg-3 mb-5 mb-md-0">
+          <a class="product-item" href="{{ url_for('cart') }}">
+            <img src="https://dummyimage.com/600x400/dee2e6/6c757d.jpg" class="img-fluid product-thumbnail" alt="Pulsera aeroespacial">
+            <h3 class="product-title">Pulsera Estelar</h3>
+            <strong class="product-price">$15.00</strong>
+            <span class="icon-cross">
+              <img src="{{ url_for('static', filename='images/cross.svg') }}" class="img-fluid" alt="Agregar">
+            </span>
+          </a>
+        </div>
+        <!-- End Column 3 -->
+
+        <!-- Start Column 4 -->
+        <div class="col-12 col-md-4 col-lg-3 mb-5 mb-md-0">
+          <a class="product-item" href="{{ url_for('cart') }}">
+            <img src="https://dummyimage.com/600x400/dee2e6/6c757d.jpg" class="img-fluid product-thumbnail" alt="Camiseta aeroespacial">
+            <h3 class="product-title">Camiseta Cosmonauta</h3>
+            <strong class="product-price">$30.00</strong>
+            <span class="icon-cross">
+              <img src="{{ url_for('static', filename='images/cross.svg') }}" class="img-fluid" alt="Agregar">
+            </span>
+          </a>
+        </div>
+        <!-- End Column 4 -->
+
+      </div>
+    </div>
+  </div>
+  <!-- End Product Section -->
+
+  <!-- Start Why Choose Us Section -->
+  <div class="why-choose-section">
+    <div class="container-xxl">
+      <div class="row justify-content-between">
+        <div class="col-lg-6">
+          <h2 class="section-title">¿Por qué elegirnos?</h2>
+          <p>Somos apasionados por el espacio y queremos compartir esa pasión contigo con productos de alta calidad y diseño exclusivo que reflejan el universo aeroespacial.</p>
+
+          <div class="row my-5">
+            <div class="col-6 col-md-6">
+              <div class="feature">
+                <div class="icon">
+                  <img src="{{ url_for('static', filename='images/truck.svg') }}" alt="Envío rápido y gratuito" class="img-fluid">
+                </div>
+                <h3>Envío rápido y gratuito</h3>
+                <p>Recibe tus productos aeroespaciales sin costo adicional y en tiempo récord.</p>
+              </div>
+            </div>
+
+            <div class="col-6 col-md-6">
+              <div class="feature">
+                <div class="icon">
+                  <img src="{{ url_for('static', filename='images/bag.svg') }}" alt="Compra sencilla" class="img-fluid">
+                </div>
+                <h3>Compra sencilla</h3>
+                <p>Una experiencia de compra fácil y segura, diseñada para los amantes del espacio.</p>
+              </div>
+            </div>
+
+            <div class="col-6 col-md-6">
+              <div class="feature">
+                <div class="icon">
+                  <img src="{{ url_for('static', filename='images/support.svg') }}" alt="Soporte 24/7" class="img-fluid">
+                </div>
+                <h3>Soporte 24/7</h3>
+                <p>Estamos disponibles en todo momento para ayudarte con tus dudas o pedidos.</p>
+              </div>
+            </div>
+
+            <div class="col-6 col-md-6">
+              <div class="feature">
+                <div class="icon">
+                  <img src="{{ url_for('static', filename='images/return.svg') }}" alt="Devoluciones sin complicaciones" class="img-fluid">
+                </div>
+                <h3>Devoluciones sin complicaciones</h3>
+                <p>Si no estás satisfecho, devolver es fácil y rápido, sin preguntas.</p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="col-lg-5">
+          <div class="img-wrap">
+            <img src="https://dummyimage.com/900x520/dee2e6/6c757d.jpg" alt="Pasión aeroespacial" class="img-fluid">
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <!-- End Why Choose Us Section -->
+
+  <!-- Start We Help Section -->
+  <div class="we-help-section">
+    <div class="container-xxl">
+      <div class="row justify-content-between">
+        <div class="col-lg-7 mb-5 mb-lg-0">
+          <div class="imgs-grid">
+            <div class="grid grid-1">
+              <img src="https://dummyimage.com/700x520/000022/ffffff&text=Aeronave+en+vuelo" alt="Aeronave en vuelo">
+            </div>
+            <div class="grid grid-2">
+              <img src="https://dummyimage.com/520x220/001144/ffffff&text=Lanzamiento+espacial" alt="Lanzamiento espacial">
+            </div>
+            <div class="grid grid-3">
+              <img src="https://dummyimage.com/520x300/002266/ffffff&text=Piloto+en+cabina" alt="Piloto en cabina">
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-5 ps-lg-5">
+          <h2 class="section-title mb-4">Te ayudamos a explorar el mundo aeroespacial</h2>
+          <p>Descubre la emoción de volar y las maravillas de la tecnología aeroespacial. Ya seas principiante o entusiasta, aquí encontrarás historias reales, conocimientos técnicos y experiencias únicas que despertarán aún más tu pasión por la aviación y el espacio.</p>
+
+          <ul class="list-unstyled custom-list my-4">
+            <li>Aprende con testimonios auténticos de pilotos profesionales</li>
+            <li>Conoce tecnologías innovadoras y avances aeroespaciales</li>
+            <li>Infórmate sobre próximos eventos, exhibiciones y talleres</li>
+            <li>Conecta con una comunidad apasionada por el vuelo y el espacio</li>
+          </ul>
+          <p><a href="#" class="btn">Explorar ahora</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- End We Help Section -->
+
+  <!-- Start Popular Product -->
+  <div class="popular-product">
+    <div class="container-xxl">
+      <div class="row">
+
+        <div class="col-12 col-md-6 col-lg-4 mb-4 mb-lg-0">
+          <div class="product-item-sm d-flex">
+            <div class="thumbnail">
+              <img src="https://dummyimage.com/600x400/dee2e6/6c757d.jpg" alt="Piloto 1" class="img-fluid">
+            </div>
+            <div class="pt-3">
+              <h3>Cap. Juan Morales</h3>
+              <p>“Durante un vuelo nocturno en la Sierra, experimentamos una falla eléctrica completa. La formación en simulador salvó la misión.”</p>
+              <p><a href="#">Leer más</a></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 col-md-6 col-lg-4 mb-4 mb-lg-0">
+          <div class="product-item-sm d-flex">
+            <div class="thumbnail">
+              <img src="https://dummyimage.com/600x400/dee2e6/6c757d.jpg" alt="Piloto 2" class="img-fluid">
+            </div>
+            <div class="pt-3">
+              <h3>Mayor Lucía Reyes</h3>
+              <p>“Ser piloto de pruebas es enfrentarte a lo desconocido. Pero cada vuelo trae una historia, una lección, y mucha pasión.”</p>
+              <p><a href="#">Leer más</a></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 col-md-6 col-lg-4 mb-4 mb-lg-0">
+          <div class="product-item-sm d-flex">
+            <div class="thumbnail">
+              <img src="https://dummyimage.com/600x400/dee2e6/6c757d.jpg" alt="Piloto 3" class="img-fluid">
+            </div>
+            <div class="pt-3">
+              <h3>Tte. Roberto Álvarez</h3>
+              <p>“La primera vez que atravesé una tormenta eléctrica, entendí el verdadero respeto que merece el cielo.”</p>
+              <p><a href="#">Leer más</a></p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <!-- End Popular Product -->
+
+  <!-- Start Testimonial Slider -->
+  <div class="testimonial-section">
+    <div class="container-xxl">
+      <div class="row">
+        <div class="col-lg-7 mx-auto text-center">
+          <h2 class="section-title">Testimonios de pilotos y experiencias reales</h2>
+        </div>
+      </div>
+
+      <div class="row justify-content-center">
+        <div class="col-lg-12">
+          <div class="testimonial-slider-wrap text-center">
+
+            <div id="testimonial-nav">
+              <span class="prev" data-controls="prev"><span class="fa fa-chevron-left"></span></span>
+              <span class="next" data-controls="next"><span class="fa fa-chevron-right"></span></span>
+            </div>
+
+            <div class="testimonial-slider">
+
+              <div class="item">
+                <div class="row justify-content-center">
+                  <div class="col-lg-8 mx-auto">
+                    <div class="testimonial-block text-center">
+                      <blockquote class="mb-5">
+                        <p>&ldquo;Volar por encima de las nubes te da una perspectiva única del mundo. Cada misión es un reto…&rdquo;</p>
+                      </blockquote>
+                      <div class="author-info">
+                        <div class="author-pic">
+                          <img src="https://dummyimage.com/450x300/003366/ffffff&text=Capitán+Juan+Pérez" alt="Capitán Juan Pérez" class="img-fluid">
+                        </div>
+                        <h3 class="font-weight-bold">Capitán Juan Pérez</h3>
+                        <span class="position d-block mb-3">Piloto comercial, 15 años de experiencia</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="item">
+                <div class="row justify-content-center">
+                  <div class="col-lg-8 mx-auto">
+                    <div class="testimonial-block text-center">
+                      <blockquote class="mb-5">
+                        <p>&ldquo;La primera vez que me senté en una cabina, quedé maravillada por la complejidad…&rdquo;</p>
+                      </blockquote>
+                      <div class="author-info">
+                        <div class="author-pic">
+                          <img src="https://dummyimage.com/450x300/004488/ffffff&text=Teniente+Ana+López" alt="Teniente Ana López" class="img-fluid">
+                        </div>
+                        <h3 class="font-weight-bold">Teniente Ana López</h3>
+                        <span class="position d-block mb-3">Piloto militar y especialista en ingeniería aeroespacial</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="item">
+                <div class="row justify-content-center">
+                  <div class="col-lg-8 mx-auto">
+                    <div class="testimonial-block text-center">
+                      <blockquote class="mb-5">
+                        <p>&ldquo;La aeronáutica no es solo una carrera, es una pasión de por vida…&rdquo;</p>
+                      </blockquote>
+                      <div class="author-info">
+                        <div class="author-pic">
+                          <img src="https://dummyimage.com/450x300/0055aa/ffffff&text=Capitán+Alex+Ramírez" alt="Capitán Alex Ramírez" class="img-fluid">
+                        </div>
+                        <h3 class="font-weight-bold">Capitán Alex Ramírez</h3>
+                        <span class="position d-block mb-3">Piloto de pruebas y asesor aeroespacial</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div><!-- /.testimonial-slider -->
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- End Testimonial Slider -->
+
+  <!-- Start Blog Section -->
+  <div class="blog-section">
+    <div class="container-xxl">
+      <div class="row mb-5 justify-content-center">
+        <div class="col-lg-7 text-center">
+          <h2 class="section-title">Noticias y artículos del mundo aeroespacial</h2>
+          <p>Explora entrevistas, novedades tecnológicas, lanzamientos espaciales y artículos escritos por expertos y entusiastas del vuelo.</p>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-4 mb-4">
+          <div class="post-entry">
+            <a href="#" class="post-thumbnail"><img src="https://dummyimage.com/700x420/001e3c/ffffff&text=Entrevista+a+piloto" alt="Entrevista a piloto" class="img-fluid"></a>
+            <h3><a href="#">“Lo que aprendí volando un F-5 por primera vez”</a></h3>
+            <div class="post-meta">Por <a href="#">Luis Herrera</a> • 25 mayo 2025</div>
+          </div>
+        </div>
+
+        <div class="col-lg-4 mb-4">
+          <div class="post-entry">
+            <a href="#" class="post-thumbnail"><img src="https://dummyimage.com/700x420/003355/ffffff&text=Avance+espacial" alt="Avance espacial" class="img-fluid"></a>
+            <h3><a href="#">Tecnologías espaciales que cambiarán el futuro</a></h3>
+            <div class="post-meta">Por <a href="#">Andrea Rojas</a> • 21 mayo 2025</div>
+          </div>
+        </div>
+
+        <div class="col-lg-4 mb-4">
+          <div class="post-entry">
+            <a href="#" class="post-thumbnail"><img src="https://dummyimage.com/700x420/004466/ffffff&text=Simuladores+de+vuelo" alt="Simuladores de vuelo" class="img-fluid"></a>
+            <h3><a href="#">Simuladores de vuelo: una experiencia casi real</a></h3>
+            <div class="post-meta">Por <a href="#">Carlos Méndez</a> • 18 mayo 2025</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+		<!-- End Blog Section -->	
+{% include "vistas/bottom.html" %}

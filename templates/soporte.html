@@ -1,0 +1,408 @@
+{% include "vistas/header.html" %}
+
+<div class="hero">
+  <div class="container-xxl">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <div class="intro-excerpt">
+          <h1>Centro de Soporte</h1>
+          <p class="text-muted">Estamos aquí para ayudarte. Encuentra respuestas rápidas o contacta a nuestro equipo.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-xxl py-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+
+      <!-- CANALES DE CONTACTO -->
+      <section class="mb-5">
+        <h2 class="h3 mb-4">Formas de Contacto</h2>
+        <div class="row">
+          <div class="col-md-6 mb-4">
+            <div class="card h-100">
+              <div class="card-body text-center">
+                <div class="mb-3">
+                  <i class="fas fa-envelope fa-2x text-warning"></i>
+                </div>
+                <h5 class="card-title">Correo Electrónico</h5>
+                <p class="card-text">Respuesta en 24-48 horas</p>
+                <a href="mailto:soporte@a-space.store" class="btn btn-sm btn-primary">soporte@a-space.store</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6 mb-4">
+            <div class="card h-100">
+              <div class="card-body text-center">
+                <div class="mb-3">
+                  <i class="fas fa-phone fa-2x text-warning"></i>
+                </div>
+                <h5 class="card-title">Teléfono</h5>
+                <p class="card-text">Lunes a Viernes, 9:00 - 18:00 hrs</p>
+                <a href="tel:+525551234567" class="btn btn-sm btn-primary">+52 (555) 123-4567</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6 mb-4">
+            <div class="card h-100">
+              <div class="card-body text-center">
+                <div class="mb-3">
+                  <i class="fas fa-comments fa-2x text-warning"></i>
+                </div>
+                <h5 class="card-title">Chat en Vivo</h5>
+                <p class="card-text">Disponible en el sitio (horario de oficina)</p>
+                <button class="btn btn-sm btn-primary" onclick="openChat()">Abrir Chat</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6 mb-4">
+            <div class="card h-100">
+              <div class="card-body text-center">
+                <div class="mb-3">
+                  <i class="fas fa-whatsapp fa-2x text-warning"></i>
+                </div>
+                <h5 class="card-title">WhatsApp</h5>
+                <p class="card-text">Respuesta en horario laboral</p>
+                <a href="https://wa.me/525551234567?text=Hola%2C%20tengo%20una%20pregunta..." class="btn btn-sm btn-primary">WhatsApp</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <hr class="my-5">
+
+      <!-- PREGUNTAS FRECUENTES -->
+      <section class="mb-5">
+        <h2 class="h3 mb-4">Preguntas Frecuentes</h2>
+
+        <div class="accordion" id="faqAccordion">
+
+          <!-- COMPRA -->
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="headingCompra">
+              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseCompra">
+                <strong>¿Cómo realizo una compra?</strong>
+              </button>
+            </h2>
+            <div id="collapseCompra" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+              <div class="accordion-body">
+                <ol>
+                  <li>Explora nuestro catálogo y agrega productos al carrito</li>
+                  <li>Dirígete al carrito y revisa tu selección</li>
+                  <li>Ve a checkout e ingresa o crea tu cuenta</li>
+                  <li>Completa tu dirección de envío</li>
+                  <li>Selecciona método de pago (PayPal, tarjeta, transferencia)</li>
+                  <li>Revisa el resumen y confirma la compra</li>
+                  <li>Recibirás confirmación por correo en minutos</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+
+          <!-- MÉTODOS DE PAGO -->
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="headingPago">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapsePago">
+                <strong>¿Qué métodos de pago aceptan?</strong>
+              </button>
+            </h2>
+            <div id="collapsePago" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+              <div class="accordion-body">
+                Aceptamos los siguientes métodos:
+                <ul class="mt-3">
+                  <li><strong>PayPal:</strong> Seguro y rápido</li>
+                  <li><strong>Tarjeta de crédito/débito:</strong> Visa, Mastercard, American Express</li>
+                  <li><strong>Transferencia bancaria:</strong> Para compras mayores a $5,000</li>
+                  <li><strong>Depósito en efectivo:</strong> En tiendas de conveniencia (7-Eleven, Soriana, etc.)</li>
+                </ul>
+                <p class="mt-3">
+                  <strong>Nota:</strong> Todos los pagos son procesados por proveedores certificados y seguros.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- ENVÍO -->
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="headingEnvio">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseEnvio">
+                <strong>¿Cuáles son los tiempos de envío?</strong>
+              </button>
+            </h2>
+            <div id="collapseEnvio" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+              <div class="accordion-body">
+                <strong>Dentro de México:</strong>
+                <ul class="mt-2">
+                  <li><strong>Estándar:</strong> 5-7 días hábiles ($25-$100 según destino)</li>
+                  <li><strong>Express:</strong> 2-3 días hábiles ($150-$300 según destino)</li>
+                  <li><strong>Próximo día:</strong> CDMX Y alrededores ($500+)</li>
+                </ul>
+                <p class="mt-3">
+                  <strong>Internacional:</strong> Consultá disponibilidad. Tiempos: 2-4 semanas.
+                </p>
+                <p>
+                  <strong>Nota:</strong> Los tiempos son estimados y pueden variar por festividades o circunstancias externas.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- RASTREO -->
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="headingRastreo">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseRastreo">
+                <strong>¿Cómo rastreo mi pedido?</strong>
+              </button>
+            </h2>
+            <div id="collapseRastreo" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+              <div class="accordion-body">
+                <ol>
+                  <li>Recibirás un correo de confirmación con número de rastreo</li>
+                  <li>Inicia sesión en tu cuenta y ve a "Mis Pedidos"</li>
+                  <li>Haz clic en el pedido para ver estado y operador logístico</li>
+                  <li>Puedes hacer clic en el número de rastreo para seguimiento en tiempo real</li>
+                  <li>También puedes consultar directamente con el operador (Estafeta, Fedex, etc.)</li>
+                </ol>
+                <p class="alert alert-info mt-3">
+                  <strong>Tip:</strong> Activa notificaciones en tu cuenta para recibir alertas de cambios en el estado.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- DEVOLUCIONES -->
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="headingDevolucion">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseDevolucion">
+                <strong>¿Cómo devuelvo un producto?</strong>
+              </button>
+            </h2>
+            <div id="collapseDevolucion" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+              <div class="accordion-body">
+                <p><strong>Plazo:</strong> Tienes 30 días naturales desde la entrega.</p>
+                <p><strong>Proceso:</strong></p>
+                <ol>
+                  <li>Contacta a soporte@a-space.store con número de orden</li>
+                  <li>Describe el motivo de la devolución</li>
+                  <li>Envía fotos del producto (si hay defecto)</li>
+                  <li>Te proporcionaremos instrucciones y etiqueta de envío</li>
+                  <li>Una vez recibido y verificado, procesamos reembolso (7-10 días hábiles)</li>
+                </ol>
+                <p class="alert alert-warning mt-3">
+                  <strong>Requisitos:</strong> Producto sin usar, etiquetas originales, empaque original, factura incluida.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- COSTO ENVÍO DEVOLUCIÓN -->
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="headingCostoDev">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseCostoDev">
+                <strong>¿Quién paga el envío si devuelvo?</strong>
+              </button>
+            </h2>
+            <div id="collapseCostoDev" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+              <div class="accordion-body">
+                <ul>
+                  <li><strong>Por defecto:</strong> A-space Store cubre el costo</li>
+                  <li><strong>Por cambio de opinión:</strong> Tú asumes el costo</li>
+                  <li><strong>Por error nuestro:</strong> A-space Store cubre todo</li>
+                </ul>
+                <p class="mt-3">
+                  En todos los casos, proporcionamos etiqueta de envío pagada.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- GARANTÍA -->
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="headingGarantia">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseGarantia">
+                <strong>¿Qué garantía tiene mi compra?</strong>
+              </button>
+            </h2>
+            <div id="collapseGarantia" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+              <div class="accordion-body">
+                <p><strong>Garantía estándar: 30 días contra defectos de fabricación</strong></p>
+                <p>Si tu producto tiene un defecto (rotura, costura dañada, partes faltantes, etc.):</p>
+                <ol>
+                  <li>Reporta dentro de 30 días</li>
+                  <li>Envía fotos claras del defecto</li>
+                  <li>Te enviaremos un producto nuevo o reembolso</li>
+                </ol>
+                <p class="alert alert-warning mt-3">
+                  <strong>NO cubre:</strong> Daño por uso indebido, desgaste normal, cambios de opinión.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- PROBLEMAS CON PAGO -->
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="headingProbPago">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseProbPago">
+                <strong>Mi pago fue rechazado. ¿Qué hago?</strong>
+              </button>
+            </h2>
+            <div id="collapseProbPago" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+              <div class="accordion-body">
+                <p>Los rechazos pueden ocurrir por:</p>
+                <ul>
+                  <li>Fondos insuficientes</li>
+                  <li>Datos incorrectos (nombre, CVV, fecha expiración)</li>
+                  <li>Transacción clasificada como sospechosa</li>
+                  <li>Límite de crédito alcanzado</li>
+                </ul>
+                <p class="mt-3"><strong>Soluciones:</strong></p>
+                <ol>
+                  <li>Verifica que tus datos sean correctos</li>
+                  <li>Intenta con otro método de pago</li>
+                  <li>Contacta a tu banco para autorizar la transacción</li>
+                  <li>Si persiste, escribe a soporte@a-space.store</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+
+          <!-- CREAR CUENTA -->
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="headingCuenta">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseCuenta">
+                <strong>¿Debo crear cuenta para comprar?</strong>
+              </button>
+            </h2>
+            <div id="collapseCuenta" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+              <div class="accordion-body">
+                <p>
+                  Recomendamos crear cuenta porque:
+                </p>
+                <ul>
+                  <li>Historial de compras organizado</li>
+                  <li>Rastreo de pedidos en tiempo real</li>
+                  <li>Direcciones guardadas (checkout más rápido)</li>
+                  <li>Ofertas y promociones exclusivas</li>
+                  <li>Puntos de recompensa (próximamente)</li>
+                </ul>
+                <p class="mt-3">
+                  Pero sí, puedes comprar sin cuenta (como invitado).
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- OLVIDÉ PASSWORD -->
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="headingPassword">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapsePassword">
+                <strong>Olvidé mi contraseña. ¿Cómo reset?</strong>
+              </button>
+            </h2>
+            <div id="collapsePassword" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+              <div class="accordion-body">
+                <ol>
+                  <li>En la página de login, haz clic en "¿Olvidaste tu contraseña?"</li>
+                  <li>Ingresa tu correo registrado</li>
+                  <li>Recibirás un correo con enlace de reseteo</li>
+                  <li>Haz clic en el enlace (válido 24 horas)</li>
+                  <li>Crea una nueva contraseña</li>
+                  <li>Inicia sesión con tu nueva contraseña</li>
+                </ol>
+                <p class="alert alert-info mt-3">
+                  Si no recibes el correo, revisa spam o contacta soporte.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- PRIVACIDAD -->
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="headingPrivacidad">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapsePrivacidad">
+                <strong>¿Cómo proteges mis datos?</strong>
+              </button>
+            </h2>
+            <div id="collapsePrivacidad" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+              <div class="accordion-body">
+                Implementamos múltiples capas de seguridad:
+                <ul class="mt-3">
+                  <li><strong>Conexión SSL/TLS:</strong> Todos los datos viajan encriptados (https://)</li>
+                  <li><strong>Contraseñas:</strong> Almacenadas con hash, no legibles</li>
+                  <li><strong>Tarjetas:</strong> Procesadas por proveedores certificados (PCI-DSS)</li>
+                  <li><strong>Acceso restringido:</strong> Solo personal autorizado</li>
+                  <li><strong>Cumplimiento legal:</strong> LFPDPPP México</li>
+                </ul>
+                <p class="mt-3">
+                  <a href="{{ url_for('privacidad') }}">Lee nuestra Política de Privacidad completa</a>
+                </p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <hr class="my-5">
+
+      <!-- FORMULARIO DE CONTACTO -->
+      <section>
+        <h2 class="h3 mb-4">¿No encuentras tu respuesta?</h2>
+        <p class="mb-4">Envíanos tu pregunta y nos pondremos en contacto en 24 horas.</p>
+
+        <form method="POST" action="{{ url_for('enviar_contacto_soporte') }}" class="needs-validation">
+          <div class="mb-3">
+            <label for="nombre" class="form-label">Nombre</label>
+            <input type="text" class="form-control" id="nombre" name="nombre" required>
+          </div>
+
+          <div class="mb-3">
+            <label for="email" class="form-label">Correo Electrónico</label>
+            <input type="email" class="form-control" id="email" name="email" required>
+          </div>
+
+          <div class="mb-3">
+            <label for="telefono" class="form-label">Teléfono (opcional)</label>
+            <input type="tel" class="form-control" id="telefono" name="telefono">
+          </div>
+
+          <div class="mb-3">
+            <label for="asunto" class="form-label">Asunto</label>
+            <select class="form-select" id="asunto" name="asunto" required>
+              <option value="">-- Selecciona un asunto --</option>
+              <option value="envio">Problema con envío</option>
+              <option value="producto">Problema con producto</option>
+              <option value="pago">Problema con pago</option>
+              <option value="devolucion">Devolución/Reembolso</option>
+              <option value="garantia">Garantía</option>
+              <option value="otro">Otro</option>
+            </select>
+          </div>
+
+          <div class="mb-3">
+            <label for="mensaje" class="form-label">Mensaje</label>
+            <textarea class="form-control" id="mensaje" name="mensaje" rows="5" required></textarea>
+          </div>
+
+          <button type="submit" class="btn btn-primary">Enviar Mensaje</button>
+        </form>
+      </section>
+
+    </div>
+  </div>
+</div>
+
+<script>
+  function openChat() {
+    alert('El chat en vivo está disponible de lunes a viernes, 9:00 - 18:00 hrs (Hora de México)');
+    // Aquí iría integración real con solución de chat (Intercom, Zendesk, etc.)
+  }
+</script>
+
+{% include "vistas/bottom.html" %}
